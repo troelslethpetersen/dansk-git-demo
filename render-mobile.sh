@@ -23,13 +23,20 @@ trap 'rm -f "$TMP_GIF"' EXIT
 if [[ ! -f "$CAST_FILE" ]]; then
   echo "❌ Kastfil ikke fundet: $CAST_FILE"
   echo "   Kør først: ./record.sh"
+  echo "   Hvis optagelse fejler, installér asciinema:"
+  echo "   sudo apt update && sudo apt install -y asciinema"
   exit 1
 fi
 
 for cmd in agg ffmpeg; do
   if ! command -v "$cmd" &>/dev/null; then
     echo "❌ Manglende afhængighed: $cmd"
-    echo "   Installér det og prøv igen."
+    if [[ "$cmd" == "ffmpeg" ]]; then
+      echo "   Ubuntu: sudo apt update && sudo apt install -y ffmpeg"
+    else
+      echo "   Installér agg: https://github.com/asciinema/agg"
+      echo "   (kræver typisk Rust/Cargo; fx: cargo install --locked agg)"
+    fi
     exit 1
   fi
 done

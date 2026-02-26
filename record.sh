@@ -12,6 +12,20 @@ CAST_FILE="$CAST_DIR/demo.cast"
 
 mkdir -p "$CAST_DIR"
 
+if ! command -v asciinema &>/dev/null; then
+	echo "❌ Manglende afhængighed: asciinema"
+	echo "   Installér og prøv igen. Eksempel (Ubuntu):"
+	echo "   sudo apt update && sudo apt install -y asciinema"
+	exit 1
+fi
+
+if [[ ! -x "$SCRIPT_DIR/demo-dansk-git.sh" ]]; then
+	echo "❌ Kan ikke køre demo-scriptet: $SCRIPT_DIR/demo-dansk-git.sh"
+	echo "   Gør det eksekverbart og prøv igen:"
+	echo "   chmod +x ./demo-dansk-git.sh"
+	exit 1
+fi
+
 echo "🎬 Starter optagelse → $CAST_FILE"
 echo "   Kører: demo-dansk-git.sh"
 echo ""
